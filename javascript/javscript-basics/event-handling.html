@@ -1,0 +1,34 @@
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width,initial-scale=1.0">
+        <meta name="author"  content="Dennis">
+        <meta name="keywords" content="html,Basics of WebApp">
+        <meta name="description" content="My Website for Learning">
+        <title>Learn Javascript | Introduction To Javascript | Campuspe </title>
+        <link src="style.css" rel="stylesheet">
+        
+    </head>
+    <body>
+        <a href="index.html">Topic Home</a><br>
+        <button type="button" id="btn">Click Me</button>
+        <label>Button has been clicked the following number of times</label>
+        <input type="text" id="counterInput" value="0">
+        <script>
+            let button=document.getElementById('btn');
+            let count=0;
+            let countDisplay = document.getElementById("counterInput")
+            button.addEventListener('click',(event)=>{
+                console.log(event.type)
+                countDisplay.value = count++;
+            })
+             button.addEventListener('mouseenter',(event)=>{
+                console.log(event.type)
+            })
+            button.addEventListener('mouseleave',(event)=>{
+                console.log(event.type)
+            })
+            
+        </script>
+    </body>
+</html>

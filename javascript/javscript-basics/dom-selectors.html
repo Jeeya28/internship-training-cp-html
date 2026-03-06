@@ -1,0 +1,38 @@
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width,initial-scale=1.0">
+        <meta name="author"  content="Dennis">
+        <meta name="keywords" content="html,Basics of WebApp">
+        <meta name="description" content="My Website for Learning">
+        <title>Learn Javascript | Introduction To Javascript | Campuspe </title>
+        <link src="style.css" rel="stylesheet">
+        
+    </head>
+    <body>
+        <header>My Header</header>
+        <div id="item"><div>This is inside the div</div>this is a class item</div>
+        <p id="paragraph">This is a paragraph</p>
+        <a href="index.html">Topic Home</a><br>
+        <script>
+            // let header = document.getElementsByTagName('header')
+            // console.log(header)
+            // let classItem = document.getElementsByClassName('item')
+            // for(let classEle of classItem){
+            //     console.log(classEle)
+            // }
+            
+            // let element = document.getElementById('item')
+            // let text=element.textContent
+            // let html = element.innerHTML
+            // console.log(text)
+            // console.log(html)
+
+            let element = document.getElementById('item')
+            element.textContent = "This is the new header";
+            element.innerHTML = '<span>New Heder itemn injected via span</span>'
+            
+            
+        </script>
+    </body>
+</html>

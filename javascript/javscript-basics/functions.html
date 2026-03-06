@@ -1,0 +1,48 @@
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width,initial-scale=1.0">
+        <meta name="author"  content="Dennis">
+        <meta name="keywords" content="html,Basics of WebApp">
+        <meta name="description" content="My Website for Learning">
+        <title>Learn Javascript | Introduction To Javascript | Campuspe </title>
+        <link src="style.css" rel="stylesheet">
+        
+    </head>
+    <body>
+        <a href="index.html">Topic Home</a><br>
+        <script>
+        // 1. FUnction Declaration
+        function showMessage(){
+
+        }
+
+        function showMessageOne(message){
+            return "this is the message " + message;
+        }
+        // 2. Function call
+        console.log(showMessageOne('"How You doing?"'))
+
+        // 3. Function Expression
+        const multiply = function(a,b){
+            return a*b
+        }
+        console.log(multiply(5,5))
+
+        // 4. Arrow function
+        // 4.1 Basic Arrow function
+        const subtract = (a,b) => {
+            return a - b;
+        }
+        console.log(subtract(10,5))
+
+        // 4.2 Shorthand arrow
+        const divide = (a,b) => a/b;
+        console.log(divide(8,2))
+
+        // 4.3 No Parameters
+        const sayHello = () => console.log("Hello")
+        console.log(sayHello())
+        </script>
+    </body>
+</html>
