@@ -1,5 +1,6 @@
 import logo from './logo.svg';
 import './App.css';
+import './index.css'
 import Test from './Component/Test';
 import User from './Component/User';
 import Greetings from './Component/Greetings';

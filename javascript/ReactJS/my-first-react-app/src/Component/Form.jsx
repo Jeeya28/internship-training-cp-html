@@ -16,6 +16,7 @@ function Form(){
 
     return(
         <>
+            <p className="text-xs">This is a xs text</p>
             <input type="text" value={user.name} onChange={handleChange} placeholder="Enter a Name"/>
             <input type="email" value={user.email} onChange={handleChange} placeholder="Enter an Email"/>
             <input type="number" value={user.age} onChange={handleChange} placeholder="Enter an Age"/>
