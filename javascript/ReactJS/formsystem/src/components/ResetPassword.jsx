@@ -1,8 +1,14 @@
 import { useState } from "react";
-import {Link,useNavigate} from 'react-router-dom';
+import {Link,useNavigate,useSearchParams} from 'react-router-dom';
+import { resetPassword as resetPasswordApi } from '../api/authApi';
 
 function ResetPassword(){
     const navigate = useNavigate();
+    const [searchParams] = useSearchParams();
+    const token = searchParams.get('token');
+    const [error,setError] = useState('');
+    const [success,setSuccess] = useState('');
+    const [loading,setLoading] = useState(false);
     const [formData,setFormData] = useState({
         newPassword:'',
         confirmPassword:''
@@ -15,26 +21,46 @@ function ResetPassword(){
         })
     }
 
-    const handleSubmit = (e) =>{
+    const handleSubmit = async (e) =>{
         e.preventDefault();
+        setLoading(true);
+        setError('');
+        setSuccess('');
 
         if(formData.newPassword !== formData.confirmPassword){
-            alert('passwords do not match!');
+            setError('Passwords do not match!');
+            setLoading(false);
             return;
         }
 
-        console.log('Reset  password:',formData);
-        alert('password reset successfully')
-        navigate('/login')
+        if(!token){
+            setError('Invalid or missing token');
+            setLoading(false);
+            return;
+        }
+
+        try{
+            const response = await resetPasswordApi(token, formData.newPassword);
+            if(response.success){
+                setSuccess('Password reset successfully');
+                setTimeout(() => navigate('/login'), 3000);
+            }
+        }catch(err){
+            setError(err.message || 'Failed to reset password');
+        }finally{
+            setLoading(false);
+        }
     }
     return (
         <div className="flex items-center justify-center min-h-screen px-4">
             <div className="w-full max-w-md">
                 <div className="bg-white rounded-lg shadow-xl p-8">
                     <h2 className="text-3xl font-bold text-center text-gray-800 mb-8">
-                        Reset Passowrd
+                        Reset Password
                     </h2>
-                    <p className="text-center text-gray-600 mb-8">Enter your new password`</p>
+                    {error && <div className="bg-red-100 text-red-700 p-3 rounded mb-4">{error}</div>}
+                    {success && <div className="bg-green-100 text-green-700 p-3 rounded mb-4">{success}</div>}
+                    <p className="text-center text-gray-600 mb-8">Enter your new password</p>
                     <form className="space-y-6" onSubmit={handleSubmit}>
                         
                         <div>
@@ -48,6 +74,7 @@ function ResetPassword(){
                                 value={formData.newPassword} 
                                 required 
                                 onChange={handleChange}
+                                disabled={loading}
                                 className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none transition" 
                                 placeholder="*********"/>
                         </div>
@@ -61,12 +88,14 @@ function ResetPassword(){
                                 name="confirmPassword" 
                                 value={formData.confirmPassword} 
                                 required 
+                                disabled={loading}
                                 onChange={handleChange}
                                 className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none transition" 
                                 placeholder="*********"/>
                         </div>
                          <button 
                             type="submit"
+                            disabled={loading}
                             className="w-full bg-blue-600 text-white py-3 rounded-lg font-semibold hover:bg-blue-700 transition duration-200 shadow-md hover:shadow-lg"
                         >
                             Update Password

@@ -1,14 +1,30 @@
 import { useState } from "react";
 import {Link,useNavigate} from 'react-router-dom';
+import {forgotPassword as forgotPasswordApi} from '../api/authApi';
 
 function ForgotPassword(){
     const navigate = useNavigate();
+    const [loading,setLoading] = useState(false);
+    const [error,setError] = useState('');
+    const [success,setSuccess] = useState('');
     const [email,setEmail]=useState('');
-    const  handleSubmit = (e) => {
+
+    const  handleSubmit = async (e) => {
         e.preventDefault();
-        console.log('Forgot Password',email);
-        alert("Password Reset Link has been sent to your email")
-        navigate('/login')
+        setLoading(true);
+        setError('');
+        setSuccess('');
+        try{
+            const response = await forgotPasswordApi(email);
+            if(response.success){
+                setSuccess('Password reset link has been sent to your email');
+                setTimeout(() => navigate('/login'), 3000);
+            }
+        }catch(err){
+            setError(err.message || 'Failed to send password reset link');
+        }finally{
+            setLoading(false);
+        }
     }
     return (
         <div className="flex items-center justify-center min-h-screen px-4">
@@ -17,9 +33,11 @@ function ForgotPassword(){
                     <h2 className="text-3xl font-bold text-center text-gray-800 mb-8">
                         Forgot Pasword
                     </h2>
+                    {error && <div className="bg-red-100 text-red-700 p-3 rounded mb-4">{error}</div>}
+                    {success && <div className="bg-green-100 text-green-700 p-3 rounded mb-4">{success}</div>}
                     <form className="space-y-6" onSubmit={handleSubmit}>
                         <div>
-                            <label htmlFor="email" className="block text-sm font-medium text-gray-700 mb-2">Email Address</label>
+                            <label htmlFor="email" className="block text-sm font-medium text-gray-700 mb-2">Enter your email Address and we'll send you a reset link</label>
                             <input 
                                 type="email" 
                                 id="email" 
